@@ -1,1 +1,1 @@
-Reference: [ginを最速でマスターしよう](https://qiita.com/Syoitu/items/8e7e3215fb7ac9dabc3a)
+Reference: [【Go】Ginを使ってCRUDなAPIサーバーを作ってみた](https://qiita.com/katsuomi/items/d1e6625ae9a5b663e11f)
