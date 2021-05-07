@@ -59,6 +59,7 @@ func main() {
 	log.Println("test")
 	fmt.Println("hello")
 	bc := NewBlockchain()
+	bc.CreateBlock(10, "second hash")
 	fmt.Println(bc)
 	bc.Print()
 }
