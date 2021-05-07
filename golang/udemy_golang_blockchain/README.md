@@ -1,0 +1,1 @@
+[現役シリコンバレーエンジニアが教えるGoで始めるスクラッチからのブロックチ…現役シリコンバレーエンジニアが教えるGoで始めるスクラッチからのブロックチェーン開発入門](https://www.udemy.com/course/go-blockchain/learn/lecture/16480032)
