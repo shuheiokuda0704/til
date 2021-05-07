@@ -28,13 +28,37 @@ func (b *Block) Print() {
 	fmt.Printf("transactions   %s\n", b.transactions)
 }
 
+type Blockchain struct {
+	transactionPool []string
+	chain           []*Block
+}
+
+func NewBlockchain() *Blockchain {
+	bc := new(Blockchain)
+	bc.CreateBlock(0, "init hash")
+	return bc
+}
+
+func (bc *Blockchain) CreateBlock(nonce int, previousHash string) *Block {
+	b := NewBlock(nonce, previousHash)
+	bc.chain = append(bc.chain, b)
+	return b
+}
+
+func (bc *Blockchain) Print() {
+	for i, block := range bc.chain {
+		fmt.Printf("Chain %d\n", i)
+		block.Print()
+	}
+}
+
 func init() {
 	log.SetPrefix("Blockchain: ")
 }
 func main() {
 	log.Println("test")
 	fmt.Println("hello")
-	b := NewBlock(0, "init hash")
-	fmt.Println(b)
-	b.Print()
+	bc := NewBlockchain()
+	fmt.Println(bc)
+	bc.Print()
 }
