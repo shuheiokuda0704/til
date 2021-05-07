@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -47,9 +48,10 @@ func (bc *Blockchain) CreateBlock(nonce int, previousHash string) *Block {
 
 func (bc *Blockchain) Print() {
 	for i, block := range bc.chain {
-		fmt.Printf("Chain %d\n", i)
+		fmt.Printf("%s Chain %d %s\n", strings.Repeat("=", 25), i, strings.Repeat("=", 25))
 		block.Print()
 	}
+	fmt.Printf("%s\n", strings.Repeat("*", 25))
 }
 
 func init() {
