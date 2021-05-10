@@ -129,6 +129,20 @@ func (bc *Blockchain) mining() bool {
 	return true
 }
 
+func (bc *Blockchain) calculateTotalAmount(blockchainAddress string) float32 {
+	var totalAmount float32 = 0
+	for _, block := range bc.chain {
+		for _, transaction := range block.transactions {
+			if transaction.recipientBlockchainAddress == blockchainAddress {
+				totalAmount += transaction.value
+			} else if transaction.senderBlockchainAddress == blockchainAddress {
+				totalAmount -= transaction.value
+			}
+		}
+	}
+	return totalAmount
+}
+
 func (bc *Blockchain) Print() {
 	for i, block := range bc.chain {
 		fmt.Printf("%s Chain %d %s\n", strings.Repeat("=", 25), i, strings.Repeat("=", 25))
@@ -180,12 +194,14 @@ func main() {
 	log.Println("test")
 	fmt.Println("hello")
 	bc := NewBlockchain(myBlockchainAddress)
-	bc.AddTransaction("sender1", "recipient1", 1.0)
-	bc.AddTransaction("sender2", "recipient2", 2.0)
+	bc.AddTransaction("address1", "address3", 1.0)
+	bc.AddTransaction("address1", "address3", 2.0)
 	bc.mining()
-	bc.AddTransaction("sender3", "recipient3", 3.0)
-	bc.AddTransaction("sender4", "recipient4", 4.0)
+	bc.AddTransaction("address3", "address2", 3.0)
+	bc.AddTransaction("address3", "address4", 4.0)
 	bc.Print()
 	bc.mining()
 	bc.Print()
+	fmt.Printf("amount: %.1f\n", bc.calculateTotalAmount("address3"))
+	fmt.Printf("amount: %.1f\n", bc.calculateTotalAmount("my_blockchain_address"))
 }
