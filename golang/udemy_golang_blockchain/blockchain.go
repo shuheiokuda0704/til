@@ -9,7 +9,11 @@ import (
 	"time"
 )
 
-const MAINING_DIFFICULTY = 3
+const (
+	MINING_DIFFICULTY = 3
+	MINING_SENDER     = "THE BLOCKCHAIN"
+	MINING_REWARD     = 1.0
+)
 
 type Block struct {
 	nonce        int
@@ -58,13 +62,15 @@ func (b *Block) MarshalJSON() ([]byte, error) {
 }
 
 type Blockchain struct {
-	transactionPool []*Transaction
-	chain           []*Block
+	transactionPool   []*Transaction
+	chain             []*Block
+	blockchainAddress string
 }
 
-func NewBlockchain() *Blockchain {
+func NewBlockchain(blockchainAddress string) *Blockchain {
 	b := &Block{}
 	bc := new(Blockchain)
+	bc.blockchainAddress = blockchainAddress
 	bc.CreateBlock(0, b.Hash())
 	return bc
 }
@@ -108,10 +114,19 @@ func (bc *Blockchain) ProofOfWork() int {
 	transactions := bc.CopyTrasactionPool()
 	previousHash := bc.LastBlock().Hash()
 	nonce := 0
-	for !bc.ValidProof(nonce, previousHash, transactions, MAINING_DIFFICULTY) {
+	for !bc.ValidProof(nonce, previousHash, transactions, MINING_DIFFICULTY) {
 		nonce++
 	}
 	return nonce
+}
+
+func (bc *Blockchain) mining() bool {
+	bc.AddTransaction(MINING_SENDER, bc.blockchainAddress, MINING_REWARD)
+	nonce := bc.ProofOfWork()
+	previousHash := bc.LastBlock().Hash()
+	bc.CreateBlock(nonce, previousHash)
+	log.Println("action=mining, status=success")
+	return true
 }
 
 func (bc *Blockchain) Print() {
@@ -160,15 +175,17 @@ func init() {
 	log.SetPrefix("Blockchain: ")
 }
 func main() {
+	myBlockchainAddress := "my_blockchain_address"
+
 	log.Println("test")
 	fmt.Println("hello")
-	bc := NewBlockchain()
+	bc := NewBlockchain(myBlockchainAddress)
 	bc.AddTransaction("sender1", "recipient1", 1.0)
 	bc.AddTransaction("sender2", "recipient2", 2.0)
-	bc.CreateBlock(bc.ProofOfWork(), bc.LastBlock().Hash())
+	bc.mining()
 	bc.AddTransaction("sender3", "recipient3", 3.0)
 	bc.AddTransaction("sender4", "recipient4", 4.0)
 	bc.Print()
-	bc.CreateBlock(bc.ProofOfWork(), bc.LastBlock().Hash())
+	bc.mining()
 	bc.Print()
 }
