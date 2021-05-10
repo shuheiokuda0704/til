@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const MAINING_DIFFICULTY = 3
+
 type Block struct {
 	nonce        int
 	previousHash [32]byte
@@ -38,7 +40,6 @@ func (b *Block) Print() {
 
 func (b *Block) Hash() [32]byte {
 	m, _ := b.MarshalJSON()
-	fmt.Println(string(m))
 	return sha256.Sum256([]byte(m))
 }
 
@@ -81,6 +82,36 @@ func (bc *Blockchain) LastBlock() *Block {
 
 func (bc *Blockchain) AddTransaction(sender string, recipient string, value float32) {
 	bc.transactionPool = append(bc.transactionPool, NewTransaction(sender, recipient, value))
+}
+
+func (bc *Blockchain) CopyTrasactionPool() []*Transaction {
+	transactions := make([]*Transaction, 0) // Make empty slice
+	for _, t := range bc.transactionPool {
+		transactions = append(transactions,
+			NewTransaction(t.senderBlockchainAddress,
+				t.recipientBlockchainAddress,
+				t.value))
+	}
+	return transactions
+}
+
+func (bc *Blockchain) ValidProof(nonce int, previousHash [32]byte, transactions []*Transaction, difficulty int) bool {
+	zeros := strings.Repeat("0", difficulty)
+	guessBlock := Block{timestamp: 0, previousHash: previousHash, nonce: nonce, transactions: transactions}
+	guessHashStr := fmt.Sprintf("%x", guessBlock.Hash())
+
+	return guessHashStr[:difficulty] == zeros
+}
+
+// return nonce
+func (bc *Blockchain) ProofOfWork() int {
+	transactions := bc.CopyTrasactionPool()
+	previousHash := bc.LastBlock().Hash()
+	nonce := 0
+	for !bc.ValidProof(nonce, previousHash, transactions, MAINING_DIFFICULTY) {
+		nonce++
+	}
+	return nonce
 }
 
 func (bc *Blockchain) Print() {
@@ -134,10 +165,10 @@ func main() {
 	bc := NewBlockchain()
 	bc.AddTransaction("sender1", "recipient1", 1.0)
 	bc.AddTransaction("sender2", "recipient2", 2.0)
-	bc.CreateBlock(10, bc.LastBlock().Hash())
+	bc.CreateBlock(bc.ProofOfWork(), bc.LastBlock().Hash())
 	bc.AddTransaction("sender3", "recipient3", 3.0)
 	bc.AddTransaction("sender4", "recipient4", 4.0)
 	bc.Print()
-	bc.CreateBlock(10, bc.LastBlock().Hash())
+	bc.CreateBlock(bc.ProofOfWork(), bc.LastBlock().Hash())
 	bc.Print()
 }
