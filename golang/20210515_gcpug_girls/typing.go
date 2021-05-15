@@ -4,6 +4,8 @@ import "fmt"
 
 func main() {
 	var slice = []string{"The", "first", "go", "room"}
+	score := 0
+
 	fmt.Println(slice)
 	fmt.Println(len(slice))
 
@@ -17,8 +19,11 @@ func main() {
 
 		if answer == v {
 			fmt.Println("○")
+			score++
 		} else {
 			fmt.Println("✗")
 		}
 	}
+
+	fmt.Printf("Your socre: %d\n", score)
 }
