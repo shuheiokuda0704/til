@@ -10,8 +10,9 @@ import (
 )
 
 type Wallet struct {
-	privateKey *ecdsa.PrivateKey
-	publicKey  *ecdsa.PublicKey
+	privateKey        *ecdsa.PrivateKey
+	publicKey         *ecdsa.PublicKey
+	blockchainAddress string
 }
 
 func NewWallet() *Wallet {
@@ -30,6 +31,7 @@ func NewWallet() *Wallet {
 	// 7. Take the first 4 bytes of the second SHA-256 hash for checksum
 	// 8. Add the 4 checksum bytes from 7 at the end of extended RIMEMD-160 hash from 4 (25 bytess)
 	// 9. Convert the result from a byte string into base58
+
 	return w
 }
 
