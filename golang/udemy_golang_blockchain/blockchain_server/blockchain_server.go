@@ -25,5 +25,5 @@ func HelloWorld(w http.ResponseWriter, req *http.Request) {
 
 func (bcs *BlockchainServer) Run() {
 	http.HandleFunc("/", HelloWorld)
-	log.Fatal(http.ListenAndServe("0.0.0.0;"+strconv.Itoa(int(bcs.Port())), nil))
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+strconv.Itoa(int(bcs.Port())), nil))
 }
