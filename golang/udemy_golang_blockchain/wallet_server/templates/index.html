@@ -35,6 +35,7 @@
                         'sender_public_key': $('#public_key').val(),
                         'value': $('#send_amount').val(),
                     };
+                    console.log (JSON.stringify(transaction_data))
 
                     $.ajax({
                         url: '/transaction',
@@ -43,7 +44,7 @@
                         data: JSON.stringify(transaction_data),
                         success: function (response) {
                             console.info(response)
-                            if ($.parseJSON(resonse).message === 'fail') {
+                            if ($.parseJSON(JSON.stringify(response)).message === 'fail') {
                                 alert("failed")
                                 return
                             }

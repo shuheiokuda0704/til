@@ -80,6 +80,7 @@ func (ws *WalletServer) CreateTransaction(w http.ResponseWriter, req *http.Reque
 		value, err := strconv.ParseFloat(*t.Value, 32)
 		if err != nil {
 			log.Println("ERROR: parse error")
+			io.WriteString(w, string(utils.JsonStatus("fail")))
 			return
 		}
 		value32 := float32(value)
