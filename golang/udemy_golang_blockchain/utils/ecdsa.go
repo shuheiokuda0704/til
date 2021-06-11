@@ -19,7 +19,7 @@ func (s *Signature) String() string {
 
 func String2BigIntTuple(s string) (big.Int, big.Int) {
 	bx, _ := hex.DecodeString(s[:64])
-	by, _ := hex.DecodeString(s[:64])
+	by, _ := hex.DecodeString(s[64:])
 
 	var bix big.Int
 	var biy big.Int
@@ -44,6 +44,5 @@ func PrivateKeyFromString(s string, publicKey *ecdsa.PublicKey) *ecdsa.PrivateKe
 	b, _ := hex.DecodeString(s[:])
 	var bi big.Int
 	_ = bi.SetBytes(b)
-
 	return &ecdsa.PrivateKey{*publicKey, &bi}
 }
