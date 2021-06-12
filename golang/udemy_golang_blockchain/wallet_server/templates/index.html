@@ -56,6 +56,27 @@
                         }
                     })
                 });
+
+                function reload_amount() {
+                    let request_data = { 'blockchain_address': $('#blockchain_address').val() };
+                    console.log (JSON.stringify(request_data))
+
+                    $.ajax({
+                        url: '/amount',
+                        type: 'GET',
+                        data: request_data,
+                        success: function (response) {
+                            console.info(response)
+                            let amount = response['amount']
+                            $('#wallet_amount').text(amount);
+                        },
+                        error: function (response) {
+                            console.error(response)
+                        }
+                    })
+                };
+
+                setInterval(reload_amount, 3000)
             })
         </script>
     </head>

@@ -119,7 +119,9 @@ func (ws *WalletServer) Amount(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case http.MethodGet:
 		blockchainAddress := req.URL.Query().Get("blockchain_address")
-		endpoint := fmt.Sprintf("%s/amount", ws.Gateway)
+		fmt.Printf("[blockchainAddress] %s\n", blockchainAddress)
+		endpoint := fmt.Sprintf("%s/amount", ws.Gateway())
+		fmt.Printf("[endpoint] %s\n", endpoint)
 
 		client := &http.Client{}
 		bcsReq, _ := http.NewRequest("GET", endpoint, nil)
