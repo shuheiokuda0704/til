@@ -1,0 +1,36 @@
+{
+    "name": "lambda-dynamic-prerender",
+    "description": "Dynamically prerender pages for bots and crawlers, with Lambda@Edge, S3 and CloudFront.",
+    "license": "MIT",
+    "keywords": [
+        "lambda-functions",
+        "lambda-edge",
+        "serverless",
+        "s3-website",
+        "cloudfront",
+        "prerendering",
+        "seo",
+        "dynamic-rendering"
+    ],
+    "version": "0.0.1",
+    "main": "src/prerenderer/prerenderer.js",
+    "scripts": {
+        "deploy:api": "serverless deploy --config serverless.api.yml",
+        "deploy:api:no_associate": "serverless deploy --config serverless.api.no_associate.yml",
+        "deploy:edge": "serverless deploy --config serverless.edge.yml",
+        "deploy:edge:no_associate": "serverless deploy --config serverless.edge.no_associate.yml"
+    },
+    "dependencies": {
+        "chrome-aws-lambda": "^9.1.0",
+        "chromium": "^3.0.3",
+        "puppeteer-core": "^13.1.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.8",
+        "@babel/preset-env": "^7.14.8",
+        "babel-loader": "^8.2.2",
+        "serverless-plugin-existing-cloudfront-lambda-edge": "^2.0.1",
+        "serverless-webpack": "^5.5.1",
+        "webpack": "^5.47.0"
+    }
+}
