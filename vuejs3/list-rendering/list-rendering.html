@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ListRendering</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div id="list-rendering">
+    <ol>
+      <li v-for="todo in todos">
+        {{ todo.text }}
+      </li>
+    </ol>
+  </div>
+</body>
+<script src="list-rendering.js"></script>
+</html>
