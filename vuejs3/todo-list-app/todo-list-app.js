@@ -3,19 +3,36 @@ const TodoItem = {
   template: `<li>{{ todo.text }}</li>`
 }
 
+//const DeleteTodoButtton
+//const EditTodoButton
+//const TodoListFooter
+//const ClearTodosButton
+//const TodoListStatistics
+
+const AddTodoButton = {
+  props: ['add-todo'],
+  template: `<button>{{ title }}</button>`,
+  data() {
+    return {
+      title: 'Add'
+    }
+  }
+}
+
 const TodoList = {
   data() {
     return {
-      groceryList: [
-        { id: 0, text: 'Vegetables'},
-        { id: 1, text: 'Cheese'},
-        { id: 2, text: 'Whatever else humans are supposed to eat'},
-        { id: 3, text: 'Something else'}
+      todoList: [
+        { id: 0, text: 'Buy Vegetables'},
+        { id: 1, text: 'Buy Cheese'},
+        { id: 2, text: 'Buy whatever else humans are supposed to eat'},
+        { id: 3, text: 'Buy something else'}
       ]
     }
   },
   components: {
-    TodoItem
+    TodoItem,
+    AddTodoButton
   }
 }
 

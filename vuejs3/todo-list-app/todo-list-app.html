@@ -8,11 +8,14 @@
   <div id="todo-list-app">
     <ol>
       <todo-item
-        v-for="item in groceryList"
+        v-for="item in todoList"
         v-bind:todo="item"
         v-bind:key="item.id"
       ></todo-item>
     </ol>
+    <add-todo-button
+      v-bind="title"
+    ></add-todo-button>
   </div>
 </body>
 <script src="todo-list-app.js"></script>
