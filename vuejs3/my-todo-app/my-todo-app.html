@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyTodoApp</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div class="mytodoapp">
+    <header>
+      <h1>My ToDo</h1>
+    </header>
+
+    <div class="new-todo">
+      <input
+        class="new-todo"
+        placeholder="New ToDo"
+        v-model="newToDo"
+        @keyup.enter="addToDo"
+        />
+    </div>
+
+    <div class="todos" v-show="todos.length" v-cloak>
+      <ul class="todos">
+        <li
+          v-for="todo in todos"
+          class="todo"
+          :key="todo.id"
+          :class="{ completed: todo.completed }"
+          >
+          <div class="todo">
+            
+          </div>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>
