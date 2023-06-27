@@ -1,18 +1,23 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
 import { catchError, map } from 'rxjs';
+import { Request } from 'express';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private configService: ConfigService,
+  ) {}
 
   getHello(): string {
     return 'Hello World!';
   }
 
-  async forwardGetRequest(): Promise<any> {
+  async forwardGetRequest(request: Request): Promise<any> {
     const data = this.httpService
-      .get('https://XXXXXX')
+      .get(this.configService.get<string>('BASE_URL') + request.url)
       .pipe(
         map((res) => res.data?.data),
         map((data) => {
@@ -29,7 +34,7 @@ export class AppService {
     return data;
   }
 
-  forwardPostRequest(): string {
+  forwardPostRequest(request: Request): string {
     return 'Forward POST Reequest!';
   }
 }
