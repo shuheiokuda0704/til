@@ -1,5 +1,6 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Request } from 'express';
 
 @Controller()
 export class AppController {
@@ -11,7 +12,9 @@ export class AppController {
   }
 
   @Get('*')
-  forwardGetRequest(): string {
+  forwardGetRequest(@Req() request: Request): any {
+    console.log(request.headers);
+
     return this.appService.forwardGetRequest();
   }
 
