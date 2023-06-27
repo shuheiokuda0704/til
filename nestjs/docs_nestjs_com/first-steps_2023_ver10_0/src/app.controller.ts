@@ -13,17 +13,13 @@ export class AppController {
 
   @Get('*')
   forwardGetRequest(@Req() request: Request): any {
-    console.log(request.url);
-    console.log(request.method);
-    console.log(request.query);
     console.log(request.headers);
-    console.log(request.cookies);
 
-    return this.appService.forwardGetRequest(request);
+    return this.appService.forwardGetRequest();
   }
 
   @Post('*')
-  forwardPostRequest(@Req() request: Request): any {
-    return this.appService.forwardPostRequest(request);
+  forwardPostRequest(): string {
+    return this.appService.forwardPostRequest();
   }
 }
