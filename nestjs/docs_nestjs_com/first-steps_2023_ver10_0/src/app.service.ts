@@ -14,7 +14,7 @@ export class AppService {
 
   async forwardGetRequest(request: Request): Promise<any> {
     const data = this.httpService
-      .get('https://AAA' + request.url)
+      .get('https://dev-nfc-api.sheeta-dev.com' + request.url)
       .pipe(
         map((res) => res.data?.data),
         map((data) => {
