@@ -1,7 +1,7 @@
 class HelloWorldJob < ApplicationJob
-  queue_as :default
+  queue_as :high
 
   def perform(*args)
-    logger.info "hello world"
+    logger.warn "hello world"
   end
 end
